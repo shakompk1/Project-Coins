@@ -22,7 +22,6 @@ export class Login extends React.Component {
         if (registration) {
             loginDataServer(login, pass)
                 .then(res => {
-                    console.log(res)
                     const { userLoad } = this.props;
                     window.localStorage.setItem('access_token', res.token);
                     window.localStorage.setItem('rol', res.rol);

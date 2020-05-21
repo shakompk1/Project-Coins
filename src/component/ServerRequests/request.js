@@ -71,7 +71,26 @@ function addDataServer(value, user) {
         })
         .catch(() => 'Произошла ошибка во время загрузки данных!')
 }
+function acceptDataServer(value, user) {
+    return fetch(`http://localhost:3001/coins/accept`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: value,
+            login: user.login,
+            token: user.token,
+            rol: user.rol
 
+        })
+    })
+        .then(data => data.json())
+        .then(res => {
+            return res
+        })
+        .catch(() => 'Произошла ошибка во время загрузки данных!')
+}
 function updateDataServer(value, user) {
     return fetch(`http://localhost:3001/coins/update`, {
         method: 'PUT',
@@ -159,4 +178,4 @@ function reqisDataServer(login, pass) {
         })
 }
 
-export { getDataServer, findDataServer, takeColumnNameDataServer, loginDataServer, addDataServer, updateDataServer, deleteDataServer, reqisDataServer, waitreqDataServer };
+export { getDataServer, findDataServer, takeColumnNameDataServer, loginDataServer, addDataServer, updateDataServer, deleteDataServer, reqisDataServer, waitreqDataServer, acceptDataServer };

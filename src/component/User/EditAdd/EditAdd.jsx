@@ -8,7 +8,7 @@ export class EditAdd extends React.Component {
         value: {
             id: this.props.location.state.data.id,
             name: this.props.location.state.data.name,
-            yearIssue: this.props.location.state.data.date,
+            date: this.props.location.state.data.date,
             price: this.props.location.state.data.price,
             country: this.props.location.state.data.country,
             composition: this.props.location.state.data.composition,
@@ -31,18 +31,25 @@ export class EditAdd extends React.Component {
     manipulateCoin = () => {
         const { value, action } = this.state;
         const { user } = this.props;
-        if (action === 'edit') {
-            updateDataServer(value, user)
-                .then((res) => {
-                    this.setState({ saveStatus: res });
-                })
-        } else if (action === 'add') {
-            addDataServer(value, user)
+        const status = (value.name !== '' && value.date !== '' && value.price !== '' && value.country !== '' && value.composition !== '' && value.information !== '' && value.denomination !== '' && value.quality !== '' && value.weight !== '' && value.imgBackUrl !== '' && value.imgFrontUrl !== '')
+        if (status) {
+            if (action === 'edit') {
+                updateDataServer(value, user)
+                    .then((res) => {
+                        this.setState({ saveStatus: res });
+                    })
+            } else if (action === 'add') {
+                addDataServer(value, user)
+                    .then((res) => {
+                        this.setState({ saveStatus: res });
+                    })
+            }
+        } else {
+            alert('Заполните все поля')
         }
     }
     render() {
         const { value, saveStatus, action } = this.state;
-        console.log(value.type)
         return (
             <Main>
                 {saveStatus ? <InfoBlock>
@@ -60,7 +67,7 @@ export class EditAdd extends React.Component {
                     </Row>
                     <Row>
                         <Label htmlFor="">Year of Issue</Label>
-                        <Input name='yearIssue' value={value.yearIssue} onChange={this.addValue} type="number" />
+                        <Input name='date' value={value.date} onChange={this.addValue} type="number" />
                     </Row>
                     <Row>
                         <Label htmlFor="">Price $</Label>

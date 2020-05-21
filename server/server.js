@@ -33,7 +33,7 @@ app.get('/coins', (req, res) => {
 });
 app.get('/coins/search', (req, res) => {
     const { name, information, country, composition, quality, priceFrom, priceTo, yearIssueFrom, yearIssueTo } = req.query;
-    const nameInformation = name ? `name LIKE'%${name}%' OR information LIKE '% ${information} %'` : 'id > 0';
+    const nameInformation = name ? `name LIKE '%${name}%' OR information LIKE '%${information}%'` : 'id > 0';
     const countrySql = country ? `AND country='${country}'` : '';
     const compositionSql = composition ? `AND composition='${composition}'` : '';
     const qualitySql = quality ? `AND quality='${quality}'` : '';
@@ -41,7 +41,8 @@ app.get('/coins/search', (req, res) => {
     const priceToSql = priceTo ? `AND price<=${+priceTo}` : '';
     const yearIssueFromSql = yearIssueFrom ? `AND date>=${+yearIssueFrom}` : '';
     const yearIssueToSql = yearIssueTo ? `AND date<=${+yearIssueTo}` : '';
-    const searchDataSql = `SELECT * FROM coins.coins WHERE (${nameInformation} ${countrySql}) ${compositionSql} ${qualitySql}  ${priceFromSql} ${priceToSql} ${yearIssueFromSql} ${yearIssueToSql} AND status='true'`
+    const OrderBy = name ? `ORDER BY CASE  WHEN name LIKE '${name}%' THEN 1  WHEN name LIKE '%${information}' THEN 3  ELSE 2  END` : '';
+    const searchDataSql = `SELECT * FROM coins.coins WHERE(${nameInformation} ${countrySql}) ${compositionSql} ${qualitySql} ${priceFromSql} ${priceToSql} ${yearIssueFromSql} ${yearIssueToSql} AND status = 'true' ${OrderBy}`
     pool.query(searchDataSql, (err, data) => {
         if (!err) {
             res.json(data)
@@ -52,7 +53,7 @@ app.get('/coins/search', (req, res) => {
 });
 app.get('/coins/column', (req, res) => {
     const { value } = req.query;
-    const columnFindSql = (`SELECT ${value} FROM coins.coins GROUP BY ${value} HAVING count(*)>0;`)
+    const columnFindSql = (`SELECT ${value} FROM coins.coins GROUP BY ${value} HAVING count(*) > 0; `)
     pool.query(columnFindSql, (err, data) => {
         if (!err) {
             res.json(data);
@@ -70,9 +71,9 @@ app.post('/register', (req, res) => {
         hash: hash,
         rol: 'user'
     };
-    const checkUserSql = (`SELECT * FROM users WHERE login='${user.login}'`)
-    const addUserSql = (`INSERT INTO users (login,salt,hash,rol,token) VALUES
-    ('${user.login}','${user.salt}','${user.hash}','${user.rol}','')`)
+    const checkUserSql = (`SELECT * FROM users WHERE login = '${user.login}'`)
+    const addUserSql = (`INSERT INTO users(login, salt, hash, rol, token) VALUES
+        ('${user.login}', '${user.salt}', '${user.hash}', '${user.rol}', '')`)
     pool.query(checkUserSql, (err, datacheck) => {
         if (datacheck.length === 0) {
             pool.query(addUserSql, (err, data) => {
@@ -90,7 +91,7 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
     const userLogin = req.body.login;
     const userPass = req.body.pass;
-    const checkUserLogoSql = (`SELECT * FROM users WHERE login='${userLogin}'`);
+    const checkUserLogoSql = (`SELECT * FROM users WHERE login = '${userLogin}'`);
     pool.query(checkUserLogoSql, (err, data) => {
         if (!err) {
             if (data.length === 0) {
@@ -101,7 +102,7 @@ app.post('/login', (req, res) => {
                 const hash = bcrypt.hashSync(userPass, salt);
                 if (data[0].hash === hash) {
                     const newToken = randomString();
-                    pool.query(`UPDATE coins.users SET token = '${newToken}' WHERE login='${userLogin}';`)
+                    pool.query(`UPDATE coins.users SET token = '${newToken}' WHERE login = '${userLogin}'; `)
                     res.json(({ login: userLogin, token: newToken, rol: data[0].rol }));
 
                 } else {
@@ -129,8 +130,8 @@ app.post('/coins', (req, res) => {
         type: req.body.type,
         status: req.body.status
     }
-    const addCoinsSql = (`INSERT INTO coins(name,imgFrontUrl,imgBackUrl,country,composition,quality,denomination,date,weight,price,information,type,status) VALUES
-        ('${coins.name}','${coins.imgFrontUrl}','${coins.imgBackUrl}','${coins.country}','${coins.composition}','${coins.quality}','${coins.denomination}','${coins.date}','${coins.weight}','${coins.price}','${coins.information}','${coins.type}','${coins.status}')`)
+    const addCoinsSql = (`INSERT INTO coins(name, imgFrontUrl, imgBackUrl, country, composition, quality, denomination, date, weight, price, information, type, status) VALUES
+        ('${coins.name}', '${coins.imgFrontUrl}', '${coins.imgBackUrl}', '${coins.country}', '${coins.composition}', '${coins.quality}', '${coins.denomination}', '${coins.date}', '${coins.weight}', '${coins.price}', '${coins.information}', '${coins.type}', '${coins.status}')`)
     pool.query(addCoinsSql, (err, data) => {
         if (!err) {
             res.status(4)
@@ -164,7 +165,7 @@ app.put('/coins/update', (req, res) => {
     pool.query(checkTokenSql, (err, data) => {
         if (!err) {
             if (data[0].token === user.token && data[0].rol === user.rol) {
-                const updateDataSql = `UPDATE coins.coins SET name='${coins.name}',imgFrontUrl='${coins.imgFrontUrl}',imgBackUrl='${coins.imgBackUrl}',country='${coins.country}',composition='${coins.composition}',quality='${coins.quality}',denomination='${coins.denomination}',date='${coins.date}', weight='${coins.weight}',price='${coins.price}',information='${coins.information}', type='${coins.type}' WHERE id='${coins.id}';`
+                const updateDataSql = `UPDATE coins.coins SET name = '${coins.name}', imgFrontUrl = '${coins.imgFrontUrl}', imgBackUrl = '${coins.imgBackUrl}', country = '${coins.country}', composition = '${coins.composition}', quality = '${coins.quality}', denomination = '${coins.denomination}', date = '${coins.date}', weight = '${coins.weight}', price = '${coins.price}', information = '${coins.information}', type = '${coins.type}' WHERE id = '${coins.id}'; `
                 pool.query(updateDataSql, (err, data) => {
                     if (!err) {
                         res.send('4')
@@ -180,6 +181,36 @@ app.put('/coins/update', (req, res) => {
         }
     })
 });
+app.put('/coins/accept', (req, res) => {
+    const coins = {
+        id: req.body.id
+    }
+    const user = {
+        login: req.body.login,
+        token: req.body.token,
+        rol: req.body.rol,
+    }
+    const checkTokenSql = `SELECT * FROM users WHERE login = '${user.login}'`
+    pool.query(checkTokenSql, (err, data) => {
+        if (!err) {
+            if (data[0].token === user.token && data[0].rol === user.rol) {
+                const updateDataSql = `UPDATE coins.coins SET status = 'true' WHERE id = '${coins.id}'; `
+                pool.query(updateDataSql, (err, data) => {
+                    if (!err) {
+                        res.send(data)
+                    } else {
+                        res.send('3')
+                    }
+                })
+            } else {
+                res.send('2')
+            }
+        } else {
+            res.send('1')
+        }
+    })
+});
+
 app.delete('/coins/delete/:id', (req, res) => {
     const login = req.body.login;
     const token = req.body.token;
@@ -189,7 +220,7 @@ app.delete('/coins/delete/:id', (req, res) => {
         if (!err) {
             if (data[0].token === token && data[0].rol === rol) {
                 const id = +req.params.id;
-                const deleteCoinsSql = (`DELETE FROM coins WHERE id='${id}' `)
+                const deleteCoinsSql = (`DELETE FROM coins WHERE id = '${id}' `)
                 pool.query(deleteCoinsSql, (err, data) => {
                     if (!err) {
                         pool.query('SELECT * FROM coins', (err, data) => {

@@ -90,11 +90,21 @@ const NavElement = styled(NavLink)`
     text-align: center;
     color: #000000;
     background: #E5E5E5;
+    cursor:pointer;
+    &:hover{
+        background: #833AE0; 
+        color: #FFFFFF;
+    }
 `
 const Button = styled.button`
     width: 120px;
     height: 48px;
     background: #E5E5E5;
     border:none;
+    cursor:pointer;
+    &:hover{
+        background: #833AE0; 
+        color: #FFFFFF;
+    }
 `
 export { Main, FindBlock, Row, SearchInput, FindButton, UserName, CoinsBlock, Img, InfoBlock, Text, Title, NavElement, Button }

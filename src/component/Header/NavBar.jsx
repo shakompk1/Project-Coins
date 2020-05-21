@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Main, NavElement } from './styled';
 
 const item = {
     id: '',
     name: '',
-    yearIssue: '',
+    date: '',
     price: '',
     country: '',
     composition: '',
@@ -16,15 +17,22 @@ const item = {
     imgFrontUrl: '',
     imgBackUrl: ''
 }
-class NavBar extends React.Component {
+export class NavBar extends React.Component {
     render() {
+        const { user } = this.props;
         return (
             <Main>
                 <NavElement to={'/'}>Coins</NavElement>
                 <NavElement to={'/stock'}>Stock</NavElement>
-                <NavElement to={{ pathname: "/coins/add", key: 2, state: { data: item, action: 'add' } }} > Add Coins</NavElement>
+                <NavElement to={{ pathname: `${user ? '/coins/add' : '/login'}`, key: 2, state: { data: item, action: 'add' } }} > Add Coin</NavElement>
             </Main >
         )
     }
 }
-export default NavBar
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(NavBar);

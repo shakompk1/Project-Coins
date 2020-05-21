@@ -10,6 +10,7 @@ import EditAdd from './component/User/EditAdd/EditAdd';
 import CoinsMain from './component/Coins/CoinsMain/CoinsMain';
 import CoinsList from './component/Coins/CoinsList/CoinsList';
 import CoinsPage from './component/Coins/CoinsPage/CoinsPage';
+import WatchHistory from './component/WatchHistory/WatchHistory';
 
 export class App extends React.Component {
     componentDidMount() {
@@ -21,10 +22,12 @@ export class App extends React.Component {
         const { userLoad } = this.props;
         if (user.login) { userLoad(user) };
     }
+   
     render() {
         return (
             <Router>
                 <Header />
+                <WatchHistory />
                 <Switch>
                     <Route path='/login' component={Login} />
                     <Route exact path='/' component={CoinsMain} />

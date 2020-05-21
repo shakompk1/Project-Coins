@@ -16,19 +16,15 @@ export class CoinsList extends React.Component {
                 .then(res => {
                     const { menuLoaded } = this.props;
                     menuLoaded(res)
-                    setTimeout(() => {
-                        this.setState({
-                            loading: false
-                        })
-                    }, 2000)
+                    this.setState({
+                        loading: false
+                    })
                 })
         }
         else {
-            setTimeout(() => {
-                this.setState({
-                    loading: false
-                })
-            }, 2000)
+            this.setState({
+                loading: false
+            })
         }
     }
     shortinfo = (value) => {

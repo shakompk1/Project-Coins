@@ -7,6 +7,16 @@ const Main = styled.div`
     flex-wrap:wrap;
     margin-top:24px;
 `
+const MainSimilar = styled.div`
+    display:flex;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    padding:25px 0;
+    @media (max-width: 900px) {
+        justify-content:center;
+      }
+`
+
 const Img = styled.img`
     display:block;
     width: 300px;
@@ -15,6 +25,27 @@ const Img = styled.img`
         margin-top:24px
     }
 `
+const ImgSimilar = styled.img`
+    width: 120px;
+    height: 120px;
+`
+
+const NavElement = styled(NavLink)`
+    min-width:300px;
+    width:32%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    text-decoration:none;
+`
+
+const Text = styled.p`
+    width: 300px;
+    height: 95px;
+    font:normal normal 12px/125.5% Roboto;
+    color: #000000;
+`
+
 const InfoBlock = styled.div`
     position:relative;
     background: rgba(196, 196, 196, 0.5);
@@ -28,6 +59,15 @@ const Title = styled.h1`
     display: flex;
     align-items: center;
     color: #000000;
+`
+const TitleSimilar = styled.h2`
+    width: 300px;
+    height: 20px;
+    font:normal bold 16px/19px Roboto;
+    color: #833AE0;
+    @media (max-width: 768px) {
+        text-align:center;
+      }
 `
 const Information = styled.p`
     font:normal normal 18px/109% Roboto;
@@ -65,4 +105,4 @@ const Back = styled(NavLink)`
 
 `
 
-export { Main, Img, InfoBlock, Title, Information, Table, Back };
+export { Main, NavElement, TitleSimilar, MainSimilar, Text, Img, ImgSimilar, InfoBlock, Title, Information, Table, Back };
