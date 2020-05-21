@@ -10,21 +10,23 @@ export class CoinsList extends React.Component {
         loading: true
     }
     componentDidMount() {
-        const { type } = this.props.location.state;
-        if (type) {
-            getDataServer(type)
-                .then(res => {
-                    const { menuLoaded } = this.props;
-                    menuLoaded(res)
-                    this.setState({
-                        loading: false
+        if (this.props.location.state) {
+            const { type } = this.props.location.state;
+            if (type) {
+                getDataServer(type)
+                    .then(res => {
+                        const { menuLoaded } = this.props;
+                        menuLoaded(res)
+                        this.setState({
+                            loading: false
+                        })
                     })
+            }
+            else {
+                this.setState({
+                    loading: false
                 })
-        }
-        else {
-            this.setState({
-                loading: false
-            })
+            }
         }
     }
     shortinfo = (value) => {

@@ -134,7 +134,7 @@ app.post('/coins', (req, res) => {
         ('${coins.name}', '${coins.imgFrontUrl}', '${coins.imgBackUrl}', '${coins.country}', '${coins.composition}', '${coins.quality}', '${coins.denomination}', '${coins.date}', '${coins.weight}', '${coins.price}', '${coins.information}', '${coins.type}', '${coins.status}')`)
     pool.query(addCoinsSql, (err, data) => {
         if (!err) {
-            res.status(4)
+            res.send('4')
         } else {
             res.status(500)
         }

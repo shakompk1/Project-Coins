@@ -54,20 +54,25 @@ const InfoBlock = styled.div`
     min-height: 624px;
     margin-left:30px;
 `
+const TitleSimilar = styled.div`
+    font:normal bold 16px/19px Roboto;
+    color: #833AE0;
+    text-align:center;
+    margin:10px auto;
+`
+
 const Title = styled.h1`
     font:normal bold 28px/33px Roboto;
     display: flex;
     align-items: center;
     color: #000000;
 `
-const TitleSimilar = styled.h2`
-    width: 300px;
+const TitleSimilarHeader = styled.h2`
     height: 20px;
-    font:normal bold 16px/19px Roboto;
+    font:normal bold 28px/19px Roboto;
     color: #833AE0;
-    @media (max-width: 768px) {
-        text-align:center;
-      }
+    text-align:center;
+    margin:50px auto 0 auto;
 `
 const Information = styled.p`
     font:normal normal 18px/109% Roboto;
@@ -105,4 +110,4 @@ const Back = styled(NavLink)`
 
 `
 
-export { Main, NavElement, TitleSimilar, MainSimilar, Text, Img, ImgSimilar, InfoBlock, Title, Information, Table, Back };
+export { Main, NavElement, TitleSimilar, TitleSimilarHeader, MainSimilar, Text, Img, ImgSimilar, InfoBlock, Title, Information, Table, Back };

@@ -29,7 +29,7 @@ const Img = styled.img`
 const InfoBlock = styled.div`
 `
 const Title = styled.h2`
-    font:normal bold 16px/19px Roboto;
+    font:normal bold 28px/19px Roboto;
     color: #833AE0;
     text-align:center;
     margin:10px auto;

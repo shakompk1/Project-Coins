@@ -50,11 +50,12 @@ export class EditAdd extends React.Component {
     }
     render() {
         const { value, saveStatus, action } = this.state;
+        const { user } = this.props;
         return (
             <Main>
                 {saveStatus ? <InfoBlock>
                     <p>{+saveStatus === 4 ? 'Accept' : 'Error'}</p>
-                    {+saveStatus === 4 ? <NavElement to='/account/admin'>Back</NavElement> : <Button onClick={() => this.setState({ saveStatus: 0 })}>Ok</Button>}
+                    {+saveStatus === 4 ? <NavElement to={user.rol === 'admin' ? '/account/admin' : '/'}>Back</NavElement> : <Button onClick={() => this.setState({ saveStatus: 0 })}>Ok</Button>}
                 </InfoBlock> : null}
                 <MainElement>
                     <Row>
