@@ -99,15 +99,34 @@ const Table = styled.table`
         background: rgba(255, 255, 255, 0.9);    
     }
 `
+const Row = styled.div`
+    margin:20px 0;
+    display:flex;
+    justify-content:space-around;
+`
 const Back = styled(NavLink)`
-    position:absolute;
-    bottom: 2.31%;
     font-family:normal normal 10px/12px Roboto;
+    padding:0 15px;
     display: flex;
     align-items: center;
     text-decoration-line: underline;
     color: #000000;
+    text-decoration:none;
+    &:hover{
+        background: #833AE0; 
+        color: #FFFFFF;
+    }
 
 `
-
-export { Main, NavElement, TitleSimilar, TitleSimilarHeader, MainSimilar, Text, Img, ImgSimilar, InfoBlock, Title, Information, Table, Back };
+const Button = styled.button`
+    width: 120px;
+    height: 48px;
+    background: #E5E5E5;
+    border:none;
+    cursor:pointer;
+    &:hover{
+        background: #833AE0; 
+        color: #FFFFFF;
+    }
+`
+export { Main, NavElement, TitleSimilar, TitleSimilarHeader, MainSimilar, Text, Img, ImgSimilar, InfoBlock, Title, Information, Table, Row, Back, Button };

@@ -11,6 +11,7 @@ import CoinsMain from './component/Coins/CoinsMain/CoinsMain';
 import CoinsList from './component/Coins/CoinsList/CoinsList';
 import CoinsPage from './component/Coins/CoinsPage/CoinsPage';
 import WatchHistory from './component/WatchHistory/WatchHistory';
+import Stock from './component/Stock/Stock';
 
 export class App extends React.Component {
     componentDidMount() {
@@ -22,7 +23,7 @@ export class App extends React.Component {
         const { userLoad } = this.props;
         if (user.login) { userLoad(user) };
     }
-   
+
     render() {
         return (
             <Router>
@@ -31,7 +32,7 @@ export class App extends React.Component {
                 <Switch>
                     <Route path='/login' component={Login} />
                     <Route exact path='/' component={CoinsMain} />
-                    <Route path='/stock'>Stock</Route>
+                    <Route path='/stock' component={Stock} />
                     <Route path='/account/user' component={UserAccount} />
                     <Route path='/account/admin' component={AdminAccount} />
                     <Route key={1} path='/coins/update' render={props => (<EditAdd {...props} />)} />

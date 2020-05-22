@@ -1,5 +1,5 @@
 import React from 'react';
-import { Main, NavElement, Text, ImgSimilar, MainSimilar, Img, InfoBlock, Title, TitleSimilarHeader, TitleSimilar, Information, Table, Back } from './styled';
+import { Main, NavElement, Text, ImgSimilar, MainSimilar, Img, InfoBlock, Title, TitleSimilarHeader, TitleSimilar, Information, Table, Row, Back, Button } from './styled';
 import { connect } from 'react-redux';
 import { findDataServer } from '../../ServerRequests/request';
 
@@ -71,6 +71,11 @@ export class CoinsPage extends React.Component {
         }
         return newText;
     }
+    addToStock = (data) => {
+        const { stockAdd } = this.props;
+        stockAdd(data)
+        alert('Товар перенесен в корзину')
+    }
     render() {
         const { data } = this.props.location.state ? this.props.location.state : [];
         const { similar } = this.state;
@@ -116,7 +121,10 @@ export class CoinsPage extends React.Component {
                                     <tr><td>Price</td><td>{data.price}$</td></tr>
                                 </tbody>
                             </Table>
-                            <Back to={{ pathname: '/coins/list', state: { type: data.type } }}>Back to the list</Back>
+                            <Row>
+                                <Back to={{ pathname: '/coins/list', state: { type: data.type } }}>Back to the list</Back>
+                                <Button onClick={() => this.addToStock(data)}>Add</Button>
+                            </Row>
                         </InfoBlock>
                     </Main >
                     <TitleSimilarHeader>Similar</TitleSimilarHeader>
@@ -133,6 +141,12 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'HISTORY_LOADED',
                 payload: newCoins
+            })
+        },
+        stockAdd: (newStock) => {
+            dispatch({
+                type: 'ADD_STOCK',
+                payload: newStock
             })
         }
     }

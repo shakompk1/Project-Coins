@@ -45,7 +45,7 @@ const UserName = styled.div`
 `
 const CoinsBlock = styled.div`
     min-width:300px;
-    width:70%;
+    width:55%;
     margin:5px;
     display:flex;
     flex-wrap:wrap;

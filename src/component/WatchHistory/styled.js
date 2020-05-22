@@ -5,7 +5,7 @@ const Main = styled.div`
     display:flex;
     justify-content:flex-start;
     flex-wrap:wrap;
-    max-width:960px;
+    max-width:1020px;
     margin:5px auto;
     overflow:hidden;
     overflow-x:scroll;
