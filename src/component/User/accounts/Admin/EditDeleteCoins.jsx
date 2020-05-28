@@ -53,7 +53,7 @@ export class EditDeleteCoins extends React.Component {
     render() {
         const { coins } = this.props;
         const { nameInformation, loading } = this.state;
-        const coinsBlock = coins.map(item => {
+        const coinsBlock = coins.length >= 0 ? coins.map(item => {
             const text = this.shortinfo(item.information)
             return (
                 <CoinsBlock key={item.id}>
@@ -66,7 +66,7 @@ export class EditDeleteCoins extends React.Component {
                     <Button onClick={() => this.deleteCoins(item.id)}>Delete</Button>
                 </CoinsBlock>
             )
-        })
+        }) : null;
         return (
             <div>
                 {loading ? <ReactLoading type='spin' color='#843AE0' height={'5%'} width={'5%'} /> : null}

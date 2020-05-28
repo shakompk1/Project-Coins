@@ -43,7 +43,7 @@ export class CoinsList extends React.Component {
     render() {
         const { loading } = this.state;
         const { coins } = this.props;
-        const coinsBlock = coins.map(item => {
+        const coinsBlock = coins.length >= 0 ? coins.map(item => {
             const text = this.shortinfo(item.information)
             return (
                 <NavElement to={{ pathname: `/coins/page/${item.id}`, state: { data: item } }} key={item.id}>
@@ -54,7 +54,7 @@ export class CoinsList extends React.Component {
                     </InfoBlock>
                 </NavElement>
             )
-        });
+        }) : null;
         return (
             <div>
                 <Search />

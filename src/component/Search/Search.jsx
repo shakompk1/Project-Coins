@@ -101,21 +101,21 @@ export class Search extends React.Component {
                             <label htmlFor="country">Country</label>
                             <Select name='country' id="country" onChange={this.addValue} value={value.country}>
                                 <option>Push</option>
-                                {countryColumn.map(item => <option key={item.country}>{item.country}</option>)}
+                                {countryColumn.length >= 0 ? countryColumn.map(item => <option key={item.country}>{item.country}</option>) : null}
                             </Select>
                         </Row>
                         <Row>
                             <label htmlFor="metal">Mountry</label>
                             <Select name='composition' id="metal" onChange={this.addValue} value={value.composition} >
                                 <option>Push</option>
-                                {compositionColumn.map(item => <option key={item.composition}>{item.composition}</option>)}
+                                {compositionColumn.length >= 0 ? compositionColumn.map(item => <option key={item.composition}>{item.composition}</option>) : null}
                             </Select>
                         </Row>
                         <Row>
                             <label htmlFor="qualityCoin">Quality of the coin</label>
                             <Select name='quality' id="qualityCoin" onChange={this.addValue} value={value.quality} >
                                 <option>Push</option>
-                                {qualityColumn.map(item => <option key={item.quality}>{item.quality}</option>)}
+                                {qualityColumn.length >= 0 ? qualityColumn.map(item => <option key={item.quality}>{item.quality}</option>) : null}
                             </Select>
                         </Row>
                     </div>
