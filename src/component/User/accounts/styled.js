@@ -8,7 +8,9 @@ const UserName = styled.div`
     padding:50px;
     color: #000000;
 `
-
+const Row = styled.div`
+    display:flex;
+`
 const Button = styled.button`
     width: 120px;
     height: 48px;
@@ -22,6 +24,6 @@ const Button = styled.button`
     }
 `
 const NavElement = styled(NavLink)`
-
+    color: #000000
 `
-export { UserName, Button, NavElement }
+export { UserName, Button, Row, NavElement }

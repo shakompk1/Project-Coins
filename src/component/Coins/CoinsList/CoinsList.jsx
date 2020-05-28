@@ -7,7 +7,7 @@ import { Main, NavElement, Img, InfoBlock, Text, Title } from './styled';
 
 export class CoinsList extends React.Component {
     state = {
-        loading: true
+        loading: this.props.location.state.loadingStatus
     }
     componentDidMount() {
         if (this.props.location.state) {
@@ -23,9 +23,9 @@ export class CoinsList extends React.Component {
                     })
             }
             else {
-                this.setState({
+                setTimeout(() => this.setState({
                     loading: false
-                })
+                }), 2000)
             }
         }
     }
@@ -46,7 +46,7 @@ export class CoinsList extends React.Component {
         const coinsBlock = coins.map(item => {
             const text = this.shortinfo(item.information)
             return (
-                <NavElement to={{ pathname: "/coins/page", state: { data: item } }} key={item.id}>
+                <NavElement to={{ pathname: `/coins/page/${item.id}`, state: { data: item } }} key={item.id}>
                     <Img alt="coins" src={item.imgFrontUrl} />
                     <InfoBlock>
                         <Title>{item.name}</Title>
@@ -54,7 +54,7 @@ export class CoinsList extends React.Component {
                     </InfoBlock>
                 </NavElement>
             )
-        })
+        });
         return (
             <div>
                 <Search />

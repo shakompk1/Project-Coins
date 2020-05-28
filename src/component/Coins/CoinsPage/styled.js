@@ -32,7 +32,8 @@ const ImgSimilar = styled.img`
 
 const NavElement = styled(NavLink)`
     min-width:300px;
-    width:32%;
+    width:30%;
+    margin:20px;
     display:flex;
     flex-wrap:wrap;
     justify-content:space-around;
@@ -40,7 +41,7 @@ const NavElement = styled(NavLink)`
 `
 
 const Text = styled.p`
-    width: 300px;
+    min-width: 300px;
     height: 95px;
     font:normal normal 12px/125.5% Roboto;
     color: #000000;
@@ -50,7 +51,8 @@ const InfoBlock = styled.div`
     position:relative;
     background: rgba(196, 196, 196, 0.5);
     padding:19px 43px 50px;
-    width: 452px;
+    min-width: 452px;
+    max-width:600px;
     min-height: 624px;
     margin-left:30px;
 `
@@ -75,7 +77,7 @@ const TitleSimilarHeader = styled.h2`
     margin:50px auto 0 auto;
 `
 const Information = styled.p`
-    font:normal normal 18px/109% Roboto;
+    font:normal normal 16px/109% Roboto;
     color: #000000;
 `
 const Table = styled.table`
@@ -100,7 +102,7 @@ const Table = styled.table`
     }
 `
 const Row = styled.div`
-    margin:20px 0;
+    margin:40px 0;
     display:flex;
     justify-content:space-around;
 `
@@ -110,23 +112,18 @@ const Back = styled(NavLink)`
     display: flex;
     align-items: center;
     text-decoration-line: underline;
-    color: #000000;
+    background: #833AE0; 
+    color: #FFFFFF;
     text-decoration:none;
-    &:hover{
-        background: #833AE0; 
-        color: #FFFFFF;
-    }
 
 `
 const Button = styled.button`
     width: 120px;
     height: 48px;
-    background: #E5E5E5;
+    background: #833AE0; 
+    color: #FFFFFF;
     border:none;
     cursor:pointer;
-    &:hover{
-        background: #833AE0; 
-        color: #FFFFFF;
-    }
+   
 `
 export { Main, NavElement, TitleSimilar, TitleSimilarHeader, MainSimilar, Text, Img, ImgSimilar, InfoBlock, Title, Information, Table, Row, Back, Button };

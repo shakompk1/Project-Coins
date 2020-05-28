@@ -10,7 +10,6 @@ import EditAdd from './component/User/EditAdd/EditAdd';
 import CoinsMain from './component/Coins/CoinsMain/CoinsMain';
 import CoinsList from './component/Coins/CoinsList/CoinsList';
 import CoinsPage from './component/Coins/CoinsPage/CoinsPage';
-import WatchHistory from './component/WatchHistory/WatchHistory';
 import Stock from './component/Stock/Stock';
 
 export class App extends React.Component {
@@ -20,15 +19,19 @@ export class App extends React.Component {
             token: window.localStorage.getItem('access_token'),
             rol: window.localStorage.getItem('rol')
         }
-        const { userLoad } = this.props;
+        const { userLoad, historyAdd } = this.props;
         if (user.login) { userLoad(user) };
+        const watchStory = window.localStorage.getItem('watchStory')
+        if (watchStory) {
+            const story = JSON.parse(watchStory);
+            historyAdd(story);
+        }
     }
 
     render() {
         return (
             <Router>
                 <Header />
-                <WatchHistory />
                 <Switch>
                     <Route path='/login' component={Login} />
                     <Route exact path='/' component={CoinsMain} />
@@ -39,7 +42,7 @@ export class App extends React.Component {
                     <Route key={2} path='/coins/add' render={props => (<EditAdd {...props} />)} />
                     <Route key={1} path='/coins/list' render={props => (<CoinsList {...props} />)} />
                     <Route key={2} path='/coins/find' render={props => (<CoinsList {...props} />)} />
-                    <Route path='/coins/page' render={props => (<CoinsPage {...props} />)} />
+                    <Route path='/coins/page/:id' component={CoinsPage} />
                 </Switch>
             </Router>
         )
@@ -57,6 +60,12 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'USER_LOGIN',
                 payload: User
+            })
+        },
+        historyAdd: (newCoins) => {
+            dispatch({
+                type: 'HISTORY_LOADED',
+                payload: newCoins
             })
         }
     }

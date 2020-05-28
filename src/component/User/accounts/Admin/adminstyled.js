@@ -45,7 +45,7 @@ const UserName = styled.div`
 `
 const CoinsBlock = styled.div`
     min-width:300px;
-    width:55%;
+    width:60%;
     margin:5px;
     display:flex;
     flex-wrap:wrap;
@@ -75,7 +75,6 @@ const Title = styled.h2`
 `
 const Text = styled.p`
     width: 300px;
-    height: 95px;
     font:normal normal 12px/125.5% Roboto;
     color: #000000;
 `
@@ -99,7 +98,9 @@ const NavElement = styled(NavLink)`
 const Button = styled.button`
     width: 120px;
     height: 48px;
+    font:normal normal 14px/16px Roboto;
     background: #E5E5E5;
+    color: #000000;
     border:none;
     cursor:pointer;
     &:hover{

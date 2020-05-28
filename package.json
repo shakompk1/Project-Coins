@@ -2,16 +2,21 @@
   "name": "myapp",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.2.5",
+    "as-nav-link": "^0.1.5",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
+    "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -20,14 +25,15 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "styled-icons": "^10.2.1"
   },
   "scripts": {
     "server": "nodemon server/server.js",
     "start": "react-scripts start",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build-and-start": "npm run build && node ./server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

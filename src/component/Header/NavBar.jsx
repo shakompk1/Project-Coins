@@ -22,8 +22,8 @@ export class NavBar extends React.Component {
         const { user } = this.props;
         return (
             <Main>
-                <NavElement to={'/'}>Coins</NavElement>
-                <NavElement to={'/stock'}>Stock</NavElement>
+                <NavElement to={'/'} exact>Coins</NavElement>
+                <NavElement to={`${user ? '/stock' : '/login'}`}>Stock</NavElement>
                 <NavElement to={{ pathname: `${user ? '/coins/add' : '/login'}`, key: 2, state: { data: item, action: 'add' } }} > Add Coin</NavElement>
             </Main >
         )

@@ -28,10 +28,19 @@ const reduser = (state = initialState, action) => {
             return state;
         case 'HISTORY_LOADED':
             let story = [...state.history];
-            const status = story.find(item => item.id === action.payload.id)
+            const status = story.find(item => item.id === action.payload.id);
             if (!status) {
-                story.push(action.payload)
-                return { ...state, history: story.slice(-5) }
+                if (action.payload.length >= 0) {
+                    for (let i = 0; i < action.payload.length; i++) {
+                        story.push(action.payload[i])
+                    }
+                } else {
+                    story.push(action.payload)
+                }
+                window.localStorage.removeItem('watchStory')
+                window.localStorage.setItem('watchStory', JSON.stringify(story.slice(-20)));
+                const newStory = { ...state, history: story.slice(-20) }
+                return newStory
             }
             return state;
         default:

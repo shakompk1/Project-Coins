@@ -1,32 +1,38 @@
 import React from 'react';
+import { message } from 'antd';
+import 'antd/dist/antd.css';
 import { Main, NavElement, Text, ImgSimilar, MainSimilar, Img, InfoBlock, Title, TitleSimilarHeader, TitleSimilar, Information, Table, Row, Back, Button } from './styled';
 import { connect } from 'react-redux';
-import { findDataServer } from '../../ServerRequests/request';
+import { findDataServer, getCoinDataServer } from '../../ServerRequests/request';
 
 export class CoinsPage extends React.Component {
     state = {
-        similar: []
+        similar: [],
+        data: undefined
     }
     componentDidMount() {
-        if (this.props.location.state) {
-            const { historyAdd } = this.props;
-            const { data } = this.props.location.state;
-            historyAdd(data)
-            const value = {
-                composition: data.composition,
-                priceFrom: data.price - 50,
-                priceTo: data.price + 50,
-            }
-            findDataServer(value)
-                .then(res => {
-                    this.setState({
-                        similar: res
+        const { id } = this.props.match.params;
+        getCoinDataServer(id)
+            .then(res => {
+                const data = res[0]
+                this.setState({ data: data });
+                const { historyAdd } = this.props;
+                historyAdd(data)
+                const value = {
+                    composition: data.composition,
+                    priceFrom: data.price - 50,
+                    priceTo: data.price + 50,
+                }
+                findDataServer(value)
+                    .then(res => {
+                        this.setState({
+                            similar: res
+                        })
                     })
-                })
-        }
+            })
     }
     creatParagraph = () => {
-        const { data } = this.props.location.state;
+        const { data } = this.state;
         let text = '';
         const allText = [];
         for (let i = 0; i < data.information.length; i++) {
@@ -39,20 +45,25 @@ export class CoinsPage extends React.Component {
         return allText;
     }
     openNewPage = (data) => {
-        const { historyAdd } = this.props;
-        historyAdd(data)
-        const value = {
-            composition: data.composition,
-            priceFrom: data.price - 50,
-            priceTo: data.price + 50,
-        }
-        findDataServer(value)
+        getCoinDataServer(data)
             .then(res => {
-                this.setState({
-                    similar: res
-                })
+                const data = res[0]
+                this.setState({ data: data });
+                const { historyAdd } = this.props;
+                historyAdd(data)
+                const value = {
+                    composition: data.composition,
+                    priceFrom: data.price - 50,
+                    priceTo: data.price + 50,
+                }
+                findDataServer(value)
+                    .then(res => {
+                        this.setState({
+                            similar: res
+                        })
+                    })
+                this.backToTop()
             })
-        this.backToTop()
     }
     backToTop() {
         if (window.pageYOffset > 0) {
@@ -74,11 +85,10 @@ export class CoinsPage extends React.Component {
     addToStock = (data) => {
         const { stockAdd } = this.props;
         stockAdd(data)
-        alert('Товар перенесен в корзину')
+        message.success('Add to stock', 3);
     }
     render() {
-        const { data } = this.props.location.state ? this.props.location.state : [];
-        const { similar } = this.state;
+        const { similar, data } = this.state;
         let id = 0;
         let similarCoins = []
         if (similar) {
@@ -86,7 +96,7 @@ export class CoinsPage extends React.Component {
                 const text = this.shortinfo(item.information)
                 if (item.id !== data.id) {
                     return (
-                        <NavElement onClick={() => this.openNewPage(item)} to={{ pathname: "/coins/page", state: { data: item } }} key={item.id}>
+                        <NavElement onClick={() => this.openNewPage(item.id)} to={{ pathname: `/coins/page/${item.id}` }} key={item.id}>
                             <ImgSimilar alt="coins" src={item.imgFrontUrl} />
                             <div>
                                 <TitleSimilar>{item.name}</TitleSimilar>

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const randomString = require('./randomString');
+const path = require('path')
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -15,10 +16,10 @@ app.use(cors());
 
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'Saxriyar001',
-    database: 'coins'
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASS || 'Saxriyar001',
+    database: process.env.DB_NAME || 'coins'
 });
 app.get('/coins', (req, res) => {
     const type = req.query.type ? `WHERE type='${req.query.type}'` : 'WHERE id > 0';
@@ -30,6 +31,41 @@ app.get('/coins', (req, res) => {
             req.status(500)
         }
     });
+});
+app.post('/coins/user/bgrep', (req, res) => {
+    console.log('gg')
+    const { name, text } = req.body;
+    const sendBqRepSql = (`INSERT INTO bagreporter(name,text) VALUES
+    ('${name}','${text}')`);
+    pool.query(sendBqRepSql, (err, data) => {
+        if (!err) {
+            res.json(data);
+        } else {
+            res.status(500);
+        }
+    })
+})
+app.get('/coins/user/bgrep', (req, res) => {
+    console.log('gg')
+    const takeBqRepSql = (`SELECT * FROM bagreporter`);
+    pool.query(takeBqRepSql, (err, data) => {
+        if (!err) {
+            res.json(data);
+        } else {
+            res.status(500);
+        }
+    })
+})
+app.get('/coins/page/:id', (req, res) => {
+    const idOfUser = Number(req.params.id);
+    const searchCoinsDataSql = `SELECT * FROM coins WHERE id=${idOfUser}`;
+    pool.query(searchCoinsDataSql, (err, data) => {
+        if (!err) {
+            res.json(data);
+        } else {
+            res.status(500);
+        }
+    })
 });
 app.get('/coins/search', (req, res) => {
     const { name, information, country, composition, quality, priceFrom, priceTo, yearIssueFrom, yearIssueTo } = req.query;
@@ -238,6 +274,8 @@ app.delete('/coins/delete/:id', (req, res) => {
         }
     })
 });
-
-
+app.use(express.static(path.join(__dirname, '../build')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'))
+})
 app.listen(port, () => { console.log('Serve online') })

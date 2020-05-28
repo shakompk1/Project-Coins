@@ -18,8 +18,6 @@ const SearchInput = styled.input`
 `
 
 const NavElement = styled(NavLink)`
-`
-const FindButton = styled.button`
     width: 120px;
     height: 48px;
     background: #833AE0;
@@ -28,6 +26,19 @@ const FindButton = styled.button`
     color: #FFFFFF;
     border:none;
     margin-left:30px;
+    text-decoration:none;
+    display:flex;
+    justify-content:center;
+`
+const FindButton = styled.button`
+    width:100%;
+    background: #833AE0;
+    outline-style: none ;
+    font:normal normal 14px/16px Roboto;
+    text-align: center;
+    cursor:pointer;
+    color: #FFFFFF;
+    border:none;
 `
 const FilterButton = styled.button`
     width: 200px;

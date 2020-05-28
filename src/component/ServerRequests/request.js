@@ -1,6 +1,15 @@
 function getDataServer(value) {
     const type = value ? `?type=${value}` : '';
-    return fetch(`http://localhost:3001/coins${type}`)
+    return fetch(`/coins${type}`)
+        .then(data => data.json())
+        .then(res => {
+            return res
+        })
+        .catch(() => 'Произошла ошибка во время загрузки данных!')
+}
+function getCoinDataServer(value) {
+    const type = value ? `${value}` : '';
+    return fetch(`/coins/page/${type}`)
         .then(data => data.json())
         .then(res => {
             return res
@@ -17,7 +26,7 @@ function findDataServer(value) {
     const priceToReq = priceTo ? `priceTo=${priceTo}&` : '';
     const yearIssueFromReq = yearIssueFrom ? `yearIssueFrom=${yearIssueFrom}&` : '';
     const yearIssueToReq = yearIssueTo ? `yearIssueTo=${yearIssueTo}&` : '';
-    return fetch(`http://localhost:3001/coins/search?${nameInfoReq}${compositionReq}${countryReq}${qualityReq}${priceFromReq}${priceToReq}${yearIssueFromReq}${yearIssueToReq}`)
+    return fetch(`/coins/search?${nameInfoReq}${compositionReq}${countryReq}${qualityReq}${priceFromReq}${priceToReq}${yearIssueFromReq}${yearIssueToReq}`)
         .then(data => data.json())
         .then(res => {
             return res
@@ -26,7 +35,7 @@ function findDataServer(value) {
 }
 function takeColumnNameDataServer(value) {
     const column = value;
-    return fetch(`http://localhost:3001/coins/column?value=${column}`)
+    return fetch(`/coins/column?value=${column}`)
         .then(data => data.json())
         .then(res => {
             return res
@@ -35,7 +44,32 @@ function takeColumnNameDataServer(value) {
 }
 function waitreqDataServer(value) {
     const status = value ? `?status=${value}` : '';
-    return fetch(`http://localhost:3001/coins${status}`)
+    return fetch(`/coins${status}`)
+        .then(data => data.json())
+        .then(res => {
+            return res
+        })
+        .catch(() => 'Произошла ошибка во время загрузки данных!')
+}
+function getBagReportServer() {
+    return fetch(`/coins/user/bgrep`)
+        .then(data => data.json())
+        .then(res => {
+            return res
+        })
+        .catch(() => 'Произошла ошибка во время загрузки данных!')
+}
+function addBagReportServer(value) {
+    return fetch(`/coins/user/bgrep`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: value.name,
+            text: value.text
+        })
+    })
         .then(data => data.json())
         .then(res => {
             return res
@@ -44,7 +78,7 @@ function waitreqDataServer(value) {
 }
 function addDataServer(value, user) {
     const status = (user.rol === 'admin') ? 'true' : 'false';
-    return fetch(`http://localhost:3001/coins`, {
+    return fetch(`/coins`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -72,7 +106,7 @@ function addDataServer(value, user) {
         .catch(() => 'Произошла ошибка во время загрузки данных!')
 }
 function acceptDataServer(value, user) {
-    return fetch(`http://localhost:3001/coins/accept`, {
+    return fetch(`/coins/accept`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -92,7 +126,7 @@ function acceptDataServer(value, user) {
         .catch(() => 'Произошла ошибка во время загрузки данных!')
 }
 function updateDataServer(value, user) {
-    return fetch(`http://localhost:3001/coins/update`, {
+    return fetch(`/coins/update`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -128,7 +162,7 @@ function deleteDataServer(value, user) {
     const login = user.login;
     const token = user.token;
     const rol = user.rol;
-    return fetch(`http://localhost:3001/coins/delete/${id}`, {
+    return fetch(`/coins/delete/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -148,7 +182,7 @@ function deleteDataServer(value, user) {
 }
 
 function loginDataServer(login, pass) {
-    return fetch('http://localhost:3001/login', {
+    return fetch('/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -163,7 +197,7 @@ function loginDataServer(login, pass) {
         })
 }
 function reqisDataServer(login, pass) {
-    return fetch('http://localhost:3001/register', {
+    return fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -178,4 +212,4 @@ function reqisDataServer(login, pass) {
         })
 }
 
-export { getDataServer, findDataServer, takeColumnNameDataServer, loginDataServer, addDataServer, updateDataServer, deleteDataServer, reqisDataServer, waitreqDataServer, acceptDataServer };
+export { getDataServer, findDataServer, takeColumnNameDataServer, loginDataServer, addDataServer, updateDataServer, deleteDataServer, reqisDataServer, waitreqDataServer, acceptDataServer, getCoinDataServer, addBagReportServer, getBagReportServer };

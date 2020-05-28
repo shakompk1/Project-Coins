@@ -1,4 +1,6 @@
 import React from 'react';
+import { message } from 'antd';
+import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { Main, Accep, OpenPage, Row, Input, LoginButton, Registration } from './styled';
 import { loginDataServer, reqisDataServer } from '../../ServerRequests/request';
@@ -22,20 +24,25 @@ export class Login extends React.Component {
         if (registration) {
             loginDataServer(login, pass)
                 .then(res => {
-                    const { userLoad } = this.props;
-                    window.localStorage.setItem('access_token', res.token);
-                    window.localStorage.setItem('rol', res.rol);
-                    window.localStorage.setItem('login', res.login);
-                    userLoad(res)
+                    if (res) {
+                        const { userLoad } = this.props;
+                        window.localStorage.setItem('access_token', res.token);
+                        window.localStorage.setItem('rol', res.rol);
+                        window.localStorage.setItem('login', res.login);
+                        userLoad(res)
+                    } else {
+                        message.error('Wrong Login or Pass');
+                    }
                 })
         } else {
             reqisDataServer(login, pass)
                 .then(res => {
-                    console.log(res)
                     if (res) {
-                        alert('Registration was successful')
+                        message.success('Registration was successful');
+                        this.setState({ registration: false })
+
                     } else {
-                        alert('Change Login')
+                        message.warning('Change Login');
                     }
                 })
         }

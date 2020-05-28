@@ -5,26 +5,24 @@ const Main = styled.div`
     display:flex;
     justify-content:flex-start;
     flex-wrap:wrap;
-    max-width:1020px;
-    margin:5px auto;
-    overflow:hidden;
-    overflow-x:scroll;
-    &::-webkit-scrollbar {
-        width: 0px;
-          }
+    padding:25px 0;
+    @media (max-width: 900px) {
+        justify-content:center;
+    }
 `
 const NavElement = styled(NavLink)`
+    min-width:300px;
+    width:50%;
     display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    flex-wrap:wrap;
+    justify-content:space-around;
     text-decoration:none;
-    margin:0 20px;
     
 `
 const Img = styled.img`
     width: 120px;
     height: 120px;
+    margin-right:50px;
 `
 const InfoBlock = styled.div`
 `
@@ -34,4 +32,10 @@ const Title = styled.h2`
     text-align:center;
     margin:10px auto;
 `
-export { Main, NavElement, Img, InfoBlock, Title }
+const Text = styled.p`
+    width: 300px;
+    height: 95px;
+    font:normal normal 12px/125.5% Roboto;
+    color: #000000;
+`
+export { Main, NavElement, Img, InfoBlock, Text, Title }

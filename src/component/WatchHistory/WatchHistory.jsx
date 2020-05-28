@@ -1,27 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Main, NavElement, Img, InfoBlock, Title } from './styled';
+import { Main, NavElement, Img, Title, Text, InfoBlock } from './styled';
 
 export class WatchHistory extends React.Component {
+    shortinfo = (value) => {
+        const text = value;
+        let newText = '';
+        for (let i = 0; i < text.length; i++) {
+            if (i > 150) {
+                break
+            }
+            newText += text[i];
+        }
+        return newText;
+    }
     render() {
         const { history } = this.props;
         const blockCoins = history.map(item => {
+            const text = this.shortinfo(item.information)
             return (
-                <NavElement to={{ pathname: "/coins/page", state: { data: item } }} key={item.id}>
-                    <Title>{item.name}</Title>
+                <NavElement to={{ pathname: `/coins/page/${item.id}` }} key={item.id}>
+                    <Img alt="coins" src={item.imgFrontUrl} />
                     <InfoBlock>
-                        <Img alt="coins" src={item.imgFrontUrl} />
+                        <Title>{item.name}</Title>
+                        <Text>{text}</Text>
                     </InfoBlock>
                 </NavElement>
             )
         }).reverse()
         return (
-            <div>
-                {blockCoins.length === 0 ? null : <Title>You watched</Title>}
-                <Main>
-                    {blockCoins}
-                </Main>
-            </div>
+            <Main>
+                {blockCoins}
+            </Main>
         )
     }
 }

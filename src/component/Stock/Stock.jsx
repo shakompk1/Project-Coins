@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { notification } from 'antd';
 import { Main, NavElement, Img, InfoBlock, Text, Price, Title, Button, TotalPrice } from './styled';
 
 export class Stock extends React.Component {
@@ -17,12 +18,27 @@ export class Stock extends React.Component {
     buyStock = (value) => {
         const { addStock } = this.props;
         addStock(value);
-        alert('Покупка прошла успешна')
+        const number = Math.floor(Math.random() * Math.floor(100));
+        notification.open({
+            message: 'The purchase was successful',
+            description:
+                `Contact the number + 994518747399, introduce yourself and tell me your order number ${number}`,
+            onClick: () => {
+                console.log('Notification Clicked!');
+            },
+        });
     }
     deleteStock = (value) => {
         const { deleteStock } = this.props;
         deleteStock(value);
-        alert('Товар удален')
+        notification.open({
+            message: 'Товар был удален',
+            description:
+                `Ваш товар был удаленн и списка`,
+            onClick: () => {
+                console.log('Notification Clicked!');
+            },
+        });
     }
     render() {
         const { stock } = this.props;

@@ -86,13 +86,12 @@ export class Search extends React.Component {
     render() {
         const { value, FilterBlockStatus, countryColumn, compositionColumn, qualityColumn } = this.state;
         const status = (value.nameInformation || value.country || value.composition || value.quality || value.yearIssueFrom || value.yearIssueTo || value.priceFrom || value.priceTo) ? true : false;
-
         return (
             <Main>
                 <Row>
                     <FindBlock>
                         <SearchInput name='nameInformation' type='search' value={(status) ? value.nameInformation : ''} onChange={this.addValue} placeholder="Search" />
-                        <NavElement to={{ pathname: '/coins/find', key: 2, state: { type: undefined } }} ><FindButton onClick={this.find}>Search</FindButton></NavElement>
+                        <NavElement to={{ pathname: '/coins/find', key: 2, state: { type: undefined, loadingStatus: true } }} ><FindButton onClick={this.find}>Search</FindButton></NavElement>
                     </FindBlock>
                     <FilterButton onClick={this.advanceFilterChange}>Advanced filter <span>></span></FilterButton>
                 </Row >

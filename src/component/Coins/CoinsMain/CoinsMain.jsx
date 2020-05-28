@@ -10,17 +10,17 @@ class CoinsMain extends React.Component {
                 <Main>
                     <div>
                         <Title>Bullion coins</Title>
-                        <NavElement to={{ pathname: '/coins/list', key: 1, state: { type: 'Investment' } }}>Show all ></NavElement>
+                        <NavElement to={{ pathname: '/coins/list', key: 1, state: { type: 'Investment', loadingStatus: true } }}>Show all ></NavElement>
                         <Img alt='Bullion' src='https://i.postimg.cc/mkdPNp9f/South-Vietnamese-Dong-1.png' />
                     </div>
                     <div>
                         <Title>Exclusive coins</Title>
-                        <NavElement to={{ pathname: '/coins/list', key: 1, state: { type: 'Exclusive' } }}>Show all ></NavElement>
+                        <NavElement to={{ pathname: '/coins/list', key: 1, state: { type: 'Exclusive', loadingStatus: true } }}>Show all ></NavElement>
                         <Img alt='Exclusive' src='https://i.postimg.cc/QdzprCHG/ISK-2.png' />
                     </div>
                     <div>
                         <Title>Commemorative coins</Title>
-                        <NavElement to={{ pathname: '/coins/list', key: 1, state: { type: 'Memorable' } }}>Show all ></NavElement>
+                        <NavElement to={{ pathname: '/coins/list', key: 1, state: { type: 'Memorable', loadingStatus: true } }}>Show all ></NavElement>
                         <Img alt='Commemorative' src='https://i.postimg.cc/J44JDZXC/Looney-1.png' />
                     </div>
                 </Main>

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { Menu } from '@styled-icons/entypo/Menu';
 
 const Main = styled.div`
     heigth:250px;
     padding:10px;
     display:flex;
     justify-content:space-between;
-    align-items:flex-end;
+    align-items:center;
     @media (max-width: 768px) {
         flex-direction: column;
         justify-content:center;
@@ -21,8 +22,11 @@ const Title = styled.div`
     font:normal 300 50px/59px Dancing Script, cursive;;
     color: #000000;
 `
-const User = styled(NavLink)`
-    width: 115px;
+const activeClassName = 'active';
+
+const User = styled(NavLink).attrs({
+    activeClassName: activeClassName,
+})`
     display: flex;
     align-items: center;   
     font:normal 300 20px/109% Roboto;
@@ -38,13 +42,18 @@ const User = styled(NavLink)`
     &:hover{
         text-decoration:underline;
         color: #833AE0;
-    }  
+    }
+    &.${activeClassName} {
+        color: #833AE0;
+    }
 `
-const NavElement = styled(NavLink)`
-    width: 115px;
+
+const NavElement = styled(NavLink).attrs({
+    activeClassName: activeClassName,
+})`
     height: 24px;
     display: flex;
-    margin:2px;
+    margin:2px 20px;
     align-items: center;
     font:normal normal 20px/24px Roboto;
     text-align: center;
@@ -54,9 +63,31 @@ const NavElement = styled(NavLink)`
     text-align: center;
     text-decoration:underline;
     color: #833AE0;
+    }
     @media (max-width: 768px) {
         width: auto;
     }
-}
+    &.${activeClassName} {
+        color: #833AE0;
+    }
 `
-export { Main, Title, User, NavElement };
+const HamburgerIcon = styled(Menu)`
+    width:30px;
+    display:none;
+    @media (max-width: 768px) {
+        display:block;
+    }
+`
+const HamburgerMenu = styled.div`
+    width:60%;
+    display:flex;
+    justify-content:space-between;
+    @media (max-width: 768px) {
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    } @media (min-width: 768px) {
+        display:flex !important;
+    }
+`
+export { Main, HamburgerMenu, HamburgerIcon, Title, User, NavElement };
